@@ -2,7 +2,6 @@ package com.demo.tests.service;
 
 import com.demo.tests.domain.Planet;
 import com.demo.tests.repository.PlanetRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
