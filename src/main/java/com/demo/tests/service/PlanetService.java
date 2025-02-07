@@ -1,14 +1,21 @@
 package com.demo.tests.service;
 
 import com.demo.tests.domain.Planet;
+import com.demo.tests.repository.PlanetRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PlanetService {
 
+    private final PlanetRepository planetRepository;
 
-    public ResponseEntity<Planet> createPlanet(Planet planet) {
-        return ResponseEntity.ok(new Planet());
+    public PlanetService(PlanetRepository planetRepository) {
+        this.planetRepository = planetRepository;
+    }
+
+
+    public Planet createPlanet(Planet planet) {
+        return planetRepository.save(planet);
     }
 }
