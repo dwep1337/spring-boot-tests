@@ -72,8 +72,7 @@ public class Planet {
         this.terrain = terrain;
     }
 
-    public Planet(Long id, String name, String climate, String terrain) {
-        this.id = id;
+    public Planet(String name, String climate, String terrain) {
         this.name = name;
         this.climate = climate;
         this.terrain = terrain;

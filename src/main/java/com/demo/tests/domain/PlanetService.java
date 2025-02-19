@@ -1,7 +1,5 @@
-package com.demo.tests.service;
+package com.demo.tests.domain;
 
-import com.demo.tests.domain.Planet;
-import com.demo.tests.repository.PlanetRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,7 +10,6 @@ public class PlanetService {
     public PlanetService(PlanetRepository planetRepository) {
         this.planetRepository = planetRepository;
     }
-
 
     public Planet createPlanet(Planet planet) {
         return planetRepository.save(planet);

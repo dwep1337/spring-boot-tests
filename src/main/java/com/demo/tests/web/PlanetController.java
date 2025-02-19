@@ -1,7 +1,7 @@
-package com.demo.tests.controller;
+package com.demo.tests.web;
 
 import com.demo.tests.domain.Planet;
-import com.demo.tests.service.PlanetService;
+import com.demo.tests.domain.PlanetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/planets")
 public class PlanetController {
 
-   private final PlanetService planetService;
+    private final PlanetService planetService;
 
     public PlanetController(PlanetService planetService) {
         this.planetService = planetService;
