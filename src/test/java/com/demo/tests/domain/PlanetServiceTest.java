@@ -10,8 +10,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,5 +47,43 @@ class PlanetServiceTest {
 
         assertThatThrownBy(() -> planetService.createPlanet(INVALID_PLANET))
                 .isInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    @DisplayName("It is expected to get a planet by id.")
+    public void getPlanetByIdWithSuccess() {
+        when(planetRepository.findById(anyLong())).thenReturn(Optional.of(PLANET));
+        Planet sut = planetService.getPlanetById(1L);
+        assertThat(sut).isEqualTo(PLANET);
+        assertThat(sut).isNotNull();
+    }
+
+    @Test
+    @DisplayName("It is expected to return null when the planet does not exist.")
+    public void getPlanetByIdWithFail() {
+        when(planetRepository.findById(1L)).thenReturn(Optional.empty());
+        Planet sut = planetService.getPlanetById(1L);
+        assertThat(sut).isNull();
+    }
+
+    @Test
+    @DisplayName("It is expected to get a planet by name.")
+    public void getPlanetByNameWithSuccess() {
+        when(planetRepository.findByName("name")).thenReturn(Optional.of(PLANET));
+
+        Planet sut = planetService.getPlanetByName("name");
+
+        assertThat(sut).isEqualTo(PLANET);
+        assertThat(sut).isNotNull();
+    }
+
+    @Test
+    @DisplayName("It is expected to return null when the planet does not exist.")
+    public void getPlanetByNameWithFail() {
+        when(planetRepository.findByName("name")).thenReturn(Optional.empty());
+
+        Planet sut = planetService.getPlanetByName("name");
+
+        assertThat(sut).isNull();
     }
 }

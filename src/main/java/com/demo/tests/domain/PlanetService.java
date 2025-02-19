@@ -14,4 +14,14 @@ public class PlanetService {
     public Planet createPlanet(Planet planet) {
         return planetRepository.save(planet);
     }
+
+    public Planet getPlanetById(Long id) {
+        return planetRepository.findById(id)
+                .orElse(null);
+    }
+
+    public Planet getPlanetByName(String name) {
+        return planetRepository.findByName(name)
+                .orElse(null);
+    }
 }
