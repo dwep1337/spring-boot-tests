@@ -42,4 +42,9 @@ public class PlanetController {
         List<Planet> planets = planetService.list(terrain, climate);
         return ResponseEntity.ok(planets);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePlanetById(@PathVariable("id") Long id) {
+       return planetService.deletePlanetById(id);
+    }
 }

@@ -1,6 +1,7 @@
 package com.demo.tests.domain;
 
 import org.springframework.data.domain.Example;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +32,14 @@ public class PlanetService {
     public List<Planet> list(String terrain, String climate) {
         Example<Planet> query = QueryBuilder.makeQuery(new Planet(terrain, climate));
         return planetRepository.findAll(query);
+    }
+
+    public ResponseEntity<Void> deletePlanetById(Long id) {
+        if (planetRepository.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        planetRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

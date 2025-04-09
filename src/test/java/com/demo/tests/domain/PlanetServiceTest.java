@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.List;
@@ -118,5 +120,25 @@ class PlanetServiceTest {
 
         assertThat(sut).isEmpty();
         assertThat(sut).hasSize(0);
+    }
+
+    @Test
+    @DisplayName("It is expected to delete a planet by id.")
+    public void deletePlanetByIdWithSuccess() {
+        when(planetRepository.findById(1L)).thenReturn(Optional.of(PLANET));
+
+        ResponseEntity<Void> planet = planetService.deletePlanetById(1L);
+
+        assertThat(planet.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+
+    @Test
+    @DisplayName("It is expected to return not found when the planet does not exist.")
+    public void deletePlanetByIdWithFail() {
+        when(planetRepository.findById(1L)).thenReturn(Optional.empty());
+
+         ResponseEntity<Void> planet = planetService.deletePlanetById(1L);
+
+        assertThat(planet.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 }
