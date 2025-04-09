@@ -77,4 +77,11 @@ public class Planet {
         this.climate = climate;
         this.terrain = terrain;
     }
+
+    public Planet(String terrain, String climate) {
+        this.name = terrain;
+        this.climate = climate;
+    }
 }
+
+

@@ -1,6 +1,9 @@
 package com.demo.tests.domain;
 
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PlanetService {
@@ -23,5 +26,10 @@ public class PlanetService {
     public Planet getPlanetByName(String name) {
         return planetRepository.findByName(name)
                 .orElse(null);
+    }
+
+    public List<Planet> list(String terrain, String climate) {
+        Example<Planet> query = QueryBuilder.makeQuery(new Planet(terrain, climate));
+        return planetRepository.findAll(query);
     }
 }
