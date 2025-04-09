@@ -9,11 +9,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Example;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -85,5 +89,34 @@ class PlanetServiceTest {
         Planet sut = planetService.getPlanetByName("name");
 
         assertThat(sut).isNull();
+    }
+
+    @Test
+    @DisplayName("It is expected to get a planet by terrain and climate.")
+    public void getPlanetByTerrainAndClimateWithSuccess() {
+        List<Planet> planets = List.of(PLANET);
+
+        Example<Planet> query = QueryBuilder.makeQuery(new Planet(planets.getFirst().getTerrain(),
+                planets.getFirst().getClimate()));
+
+        when(planetRepository.findAll(query)).thenReturn(planets);
+
+        List<Planet> sut = planetService.list(planets.getFirst().getTerrain(),
+                planets.getFirst().getClimate());
+
+        assertThat(sut).isNotEmpty();
+        assertThat(sut).hasSize(1);
+        assertThat(sut.getFirst()).isEqualTo(PLANET);
+    }
+
+    @Test
+    @DisplayName("It is expected to return an empty list when no planets match the criteria.")
+    public void getPlanetByTerrainAndClimateWithFail() {
+        when(planetRepository.findAll(any())).thenReturn(Collections.emptyList());
+
+        List<Planet> sut = planetService.list("invalidTerrain", "invalidClimate");
+
+        assertThat(sut).isEmpty();
+        assertThat(sut).hasSize(0);
     }
 }
